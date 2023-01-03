@@ -14,10 +14,10 @@ namespace API.Data
             {
                 new Product
                 {
-                    Name = "Angular Speedster Board 2000",
+                    Name = "Tala Angular vermelha",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                    Price = 20000,
+                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                    Price = 2000,
                     PictureUrl = "/images/products/sb-ang1.png",
                     Brand = "Angular",
                     Type = "Boards",
@@ -25,7 +25,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Green Angular Board 3000",
+                    Name = "Tala Angular verde",
                     Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                     Price = 15000,
                     PictureUrl = "/images/products/sb-ang2.png",
@@ -35,7 +35,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Core Board Speed Rush 3",
+                    Name = "Tala C# roxo",
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 18000,
@@ -46,7 +46,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Net Core Super Board",
+                    Name = "Tala C# laranja",
                     Description =
                         "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                     Price = 30000,
@@ -57,7 +57,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "React Board Super Whizzy Fast",
+                    Name = "Tala React azul",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 25000,
@@ -68,7 +68,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Typescript Entry Board",
+                    Name = "Tala TypeScript azul",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 12000,
@@ -79,7 +79,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Core Blue Hat",
+                    Name = "Touca C# azul",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1000,
@@ -90,7 +90,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Green React Woolen Hat",
+                    Name = "Touca React verde",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 8000,
@@ -101,7 +101,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Purple React Woolen Hat",
+                    Name = "Touca React roxa",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1500,
@@ -112,7 +112,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Blue Code Gloves",
+                    Name = "Luva VS Code azul",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1800,
@@ -123,7 +123,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Green Code Gloves",
+                    Name = "Luva VS Code verde",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1500,
@@ -134,7 +134,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Purple React Gloves",
+                    Name = "Luva React roxa",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1600,
@@ -145,7 +145,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Green React Gloves",
+                    Name = "Luva React verde",
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1400,
@@ -156,7 +156,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Redis Red Boots",
+                    Name = "Bota Redis vermelha",
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 25000,
@@ -167,7 +167,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Core Red Boots",
+                    Name = "Bota C# vermelho",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 18999,
@@ -178,7 +178,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Core Purple Boots",
+                    Name = "Bota C# roxo",
                     Description =
                         "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                     Price = 19999,
@@ -189,7 +189,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Angular Purple Boots",
+                    Name = "Bora Angular roxo",
                     Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
                     Price = 15000,
                     PictureUrl = "/images/products/boot-ang2.png",
@@ -199,7 +199,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Angular Blue Boots",
+                    Name = "Bota Angular azul",
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 18000,
