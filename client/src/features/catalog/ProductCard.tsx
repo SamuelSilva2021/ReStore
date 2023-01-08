@@ -6,15 +6,23 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  IconButton,
+  Rating,
   Typography,
 } from "@mui/material";
 import { Product } from "../../app/models/product";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Preview, ViewTimeline, Visibility } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
 
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
+  const [value, setValue] = useState<number | null>(2);
   return (
     <Card>
       <CardHeader
@@ -30,7 +38,7 @@ export default function ProductCard({ product }: Props) {
       />
 
       <CardMedia
-        sx={{ height: 140, backgroundSize: 'contain', bgcolor:'lightskyblue'}}
+        sx={{ height: 140, backgroundSize: 'contain'}}
         image={product.pictureUrl}
         title={product.name}
       />
@@ -43,8 +51,16 @@ export default function ProductCard({ product }: Props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Carrinho</Button>
-        <Button size="small">Detalhes</Button>
+      <IconButton color="primary" aria-label="add to shopping cart">
+        <AddShoppingCartIcon />
+      </IconButton>
+      <IconButton 
+      color="primary" 
+      aria-label="Details"
+      component={Link} to={`/catalog/${product.id}`}
+      >
+        <Visibility/>
+      </IconButton>
       </CardActions>
     </Card>
   );
