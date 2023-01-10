@@ -11,7 +11,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import SwitchCustom from "../../components/SwitchCustom";
+import SwitchCustom from "../components/SwitchCustom";
 
 interface Props {
   darkMode: boolean;
@@ -48,7 +48,7 @@ const navStyles = {
 
 export default function Header({ darkMode, alteraTema }: Props) {
   return (
-    <AppBar position="static" sx={{ mb: 4 }}>
+    <AppBar position="static" sx={{ mb: 6 }}>
       <Toolbar
         sx={{
           display: "flex",
