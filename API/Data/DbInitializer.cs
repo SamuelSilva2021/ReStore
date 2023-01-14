@@ -8,11 +8,11 @@ namespace API.Data
     {
         public static void Initializer(StoreContext context)
         {
-            if(context.Products.Any()) return;
+            if(context.Produtos.Any()) return;
 
-            var products = new List<Product>
+            var produtos = new List<Produto>
             {
-                new Product
+                new Produto
                 {
                     Name = "Impressora Multifuncional",
                     Description =
@@ -23,7 +23,7 @@ namespace API.Data
                     Type = "Impressoras",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Controle Xbox Razer",
                     Description =
@@ -34,7 +34,7 @@ namespace API.Data
                     Type = "Controles",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Headset Corsair",
                     Description =
@@ -45,7 +45,7 @@ namespace API.Data
                     Type = "Headsets",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Headset Corsair",
                     Description =
@@ -56,7 +56,7 @@ namespace API.Data
                     Type = "Headsets",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Headset Asus Branco",
                     Description =
@@ -67,7 +67,7 @@ namespace API.Data
                     Type = "Headsets",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Joystick Longitech",
                     Description =
@@ -78,7 +78,7 @@ namespace API.Data
                     Type = "Controles",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Monitor Asus",
                     Description =
@@ -89,7 +89,7 @@ namespace API.Data
                     Type = "Monitores",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Mouse longitech",
                     Description =
@@ -100,7 +100,7 @@ namespace API.Data
                     Type = "Periféricos",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Teclado Apple",
                     Description =
@@ -111,7 +111,7 @@ namespace API.Data
                     Type = "Periféricos",
                     QuantityInStock = 100
                 },
-                new Product
+                new Produto
                 {
                     Name = "Computador Core i7",
                     Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
@@ -123,9 +123,9 @@ namespace API.Data
                 }
             };
 
-            foreach(var product in products)
+            foreach(var prod in produtos)
             {
-                context.Products.Add(product);
+                context.Produtos.Add(prod);
             }
 
             context.SaveChanges();

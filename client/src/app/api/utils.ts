@@ -5,6 +5,7 @@ import {history} from '../..';
 const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -49,7 +50,7 @@ const requests = {
     get: (url: string) => axios.get(url).then(responseBody),
     post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-    delet: (url: string) => axios.delete(url).then(responseBody),
+    delete: (url: string) => axios.delete(url).then(responseBody),
 }
 
 const Catalog = {
@@ -65,9 +66,16 @@ const TestErros = {
     getValidationError: () => requests.get('buggy/validation-error'),
 }
 
+const Cesta = {
+    get: () => requests.get('cesta'),
+    addItem: (produtoId: number, quantidade = 1) => requests.post(`cesta?produtoId=${produtoId}&quantidade=${quantidade}`, {}),
+    removeItem: (produtoId: number, quantidade = 1) => requests.delete(`cesta?produtoId=${produtoId}&quantidade=${quantidade}`),
+}
+
 const utils = {
     Catalog,
-    TestErros
+    TestErros,
+    Cesta
 }
 
 export default utils;

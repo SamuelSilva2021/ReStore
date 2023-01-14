@@ -1,17 +1,19 @@
-import { Home, ShoppingCart } from "@mui/icons-material";
+import { ShoppingCart } from "@mui/icons-material";
 import {
   AppBar,
   Badge,
   Box,
   Button,
-  IconButton,
   List,
   ListItemButton,
   ListItemText,
   Toolbar,
+  Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import { NavLink, Link } from "react-router-dom";
 import SwitchCustom from "../components/SwitchCustom";
+import { useStoreContext } from "../context/StoreContext";
 
 interface Props {
   darkMode: boolean;
@@ -32,35 +34,34 @@ const linksUsuario = [
 const navStyles = {
   color: "inherit",
   textDecoration: "none",
-  borderRadius: 5,
+  borderRadius: 2,
   height: 39,
 
   "&:hover": {
     backgroundColor: "primary.dark",
+    color:'white'
   },
   "&.active": {
-    color: "info.dark",
-    backgroundColor: "primary.light",
+    color: "white",
+    backgroundColor: "primary.dark",
     fontWeight: "bold",
   },
   marginLeft: 1,
 };
 
+
 export default function Header({ darkMode, alteraTema }: Props) {
+  const {cesta} = useStoreContext();
+  const itemCount = cesta?.items.reduce((sum, item)=> sum + item.quantidade, 0);
+
   return (
-    <AppBar position="static" sx={{ mb: 6 }}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItens: "center",
-        }}
-      >
+    <AppBar position='static' sx={{mb:4}} color='default'>
+      <Toolbar sx={{display:"flex", justifyContent:"space-between", alignItens:"center"}}>
         <Box display='flex' alignItems='center' >
           <Button component={NavLink} exact to="/" sx={navStyles}>
             Incio
           </Button>
-          <SwitchCustom checked={darkMode} onChange={alteraTema} />
+          {/* <SwitchCustom checked={darkMode} onChange={alteraTema} /> */}
         </Box>
 
         {/* Cria os links de nevegação das paginas da navBar */}
@@ -85,8 +86,8 @@ export default function Header({ darkMode, alteraTema }: Props) {
         </List>
 
         <Box display='flex' alignItems='center'>
-          <IconButton sx={{ color: "inherit" }}>
-            <Badge badgeContent={2} color="secondary">
+          <IconButton component={Link} to='/cesta' sx={navStyles}>
+            <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>

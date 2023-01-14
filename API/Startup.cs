@@ -35,7 +35,7 @@ namespace API
             });
             services.AddCors(o => o.AddPolicy("Ecommerce", builder =>
             {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
             }));
         }
 

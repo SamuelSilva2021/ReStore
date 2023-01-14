@@ -4,7 +4,7 @@ import {
   CssBaseline,
   ThemeProvider,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AboutPage from "../../features/about/AboutPage";
@@ -16,8 +16,29 @@ import Header from "./Header";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
+import CestaPage from "../../features/cesta/CestaPage";
+import { useStoreContext } from "../context/StoreContext";
+import { getCookie } from "../utils/util";
+import utils from "../api/utils";
+import LoadingComponent from "./LoadingComponent";
+import CheckoutPage from "../../features/checkout/CheckoutPage";
 
 function App() {
+  const {setCesta} = useStoreContext();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const compradorId = getCookie('compradorId');
+    if(compradorId){
+      utils.Cesta.get()
+      .then(cesta => setCesta(cesta))
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+    }else{
+      setLoading(false);
+    }
+  }, [setCesta])
+
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? "dark" : "light";
   const theme = createTheme({
@@ -33,6 +54,8 @@ function App() {
     setDarkMode(!darkMode);
   }
 
+  if(loading) return <LoadingComponent mensagem="Inicializando app..."/>
+
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer
@@ -42,7 +65,7 @@ function App() {
       />
       <CssBaseline />
       <Header darkMode={darkMode} alteraTema={alteraTema}/>
-      <Container>
+      <Container fixed>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/catalog" component={Catalog} />
@@ -50,6 +73,8 @@ function App() {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/contact" component={ContactPage} />
           <Route exact path="/server-error" component={ServerError} />
+          <Route exact path="/cesta" component={CestaPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route component={NotFound} />
         </Switch>
       </Container>
