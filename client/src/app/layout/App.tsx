@@ -17,27 +17,28 @@ import "react-toastify/dist/ReactToastify.css";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
 import CestaPage from "../../features/cesta/CestaPage";
-import { useStoreContext } from "../context/StoreContext";
 import { getCookie } from "../utils/util";
 import utils from "../api/utils";
 import LoadingComponent from "./LoadingComponent";
 import CheckoutPage from "../../features/checkout/CheckoutPage";
+import { useAppDispatch } from "../store/configureStore";
+import { setCesta } from "../../features/cesta/cestaSlice";
 
 function App() {
-  const {setCesta} = useStoreContext();
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const compradorId = getCookie('compradorId');
     if(compradorId){
       utils.Cesta.get()
-      .then(cesta => setCesta(cesta))
+      .then(cesta => dispatch(setCesta(cesta)))
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
     }else{
       setLoading(false);
     }
-  }, [setCesta])
+  }, [dispatch])
 
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? "dark" : "light";

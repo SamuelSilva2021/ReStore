@@ -1,9 +1,8 @@
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { LoadingButton, Masonry } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
-  Container,
   Grid,
   Paper,
   Table,
@@ -14,48 +13,15 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import utils from "../../app/api/utils";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { formataMoeda } from "../../app/utils/util";
 import CestaResumo from "./CestaResumo";
+import { addItemCestaAsync, removeItemCestaAsync } from "./cestaSlice";
 
 export default function CestaPage() {
-  const { cesta, setCesta, removeItem } = useStoreContext();
-  const [status, setStatus] = useState({
-    loading: true,
-    name: "",
-  });
-
-  const btnStyles = {
-    btnRemove: {
-      color: "error",
-      textDecoration: "none",
-      borderRadius: 10,
-
-      "&:hover": {
-        backgroundColor: "#FA8072",
-        color: "white",
-      },
-    },
-  };
-
-  function handleAddItem(produtoId: number, name: string) {
-    setStatus({ loading: true, name });
-    utils.Cesta.addItem(produtoId)
-      .then((cesta) => setCesta(cesta))
-      .catch((error) => console.log(error))
-      .finally(() => setStatus({ loading: false, name: "" }));
-  }
-
-  function handleRemoveItem(produtoId: number, quantidade = 1, name: string) {
-    setStatus({ loading: true, name });
-    utils.Cesta.removeItem(produtoId, quantidade)
-      .then(() => removeItem(produtoId, quantidade))
-      .catch((error) => console.log(error))
-      .finally(() => setStatus({ loading: false, name: "" }));
-  }
+  const { cesta, status } = useAppSelector((state) => state.cesta);
+  const dispatch = useAppDispatch();
 
   if (!cesta)
     return <Typography variant="h3">Seu carrinho está vazio</Typography>;
@@ -96,14 +62,16 @@ export default function CestaPage() {
                   </TableCell>
                   <TableCell align="center">
                     <LoadingButton
-                      loading={
-                        status.loading && status.name === "rem" + item.produtoId
-                      }
+                      loading={status.includes(
+                        "pendingRemoveItem" + item.produtoId + "rem"
+                      )}
                       onClick={() =>
-                        handleRemoveItem(
-                          item.produtoId,
-                          1,
-                          "rem" + item.produtoId
+                        dispatch(
+                          removeItemCestaAsync({
+                            produtoId: item.produtoId,
+                            quantidade: 1,
+                            name: "rem",
+                          })
                         )
                       }
                       color="error"
@@ -113,11 +81,14 @@ export default function CestaPage() {
                     </LoadingButton>
                     {item.quantidade}
                     <LoadingButton
-                      loading={
-                        status.loading && status.name === "add" + item.produtoId
-                      }
+                      loading={status === "pendingAddItem" + item.produtoId}
                       onClick={() =>
-                        handleAddItem(item.produtoId, "add" + item.produtoId)
+                        dispatch(
+                          addItemCestaAsync({
+                            produtoId: item.produtoId,
+                            quantidade: 1,
+                          })
+                        )
                       }
                       color="success"
                       sx={{ borderRadius: 2 }}
@@ -131,13 +102,15 @@ export default function CestaPage() {
                   <TableCell align="right">
                     <LoadingButton
                       loading={
-                        status.loading && status.name === "del" + item.produtoId
+                        status === "pendingRemoveItem" + item.produtoId + "del"
                       }
                       onClick={() =>
-                        handleRemoveItem(
-                          item.produtoId,
-                          item.quantidade,
-                          "del" + item.produtoId
+                        dispatch(
+                          removeItemCestaAsync({
+                            produtoId: item.produtoId,
+                            quantidade: item.quantidade,
+                            name: "del",
+                          })
                         )
                       }
                       color="error"

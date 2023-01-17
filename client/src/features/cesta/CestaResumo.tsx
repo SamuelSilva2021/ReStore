@@ -1,9 +1,9 @@
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useAppSelector } from "../../app/store/configureStore";
 import { formataMoeda } from "../../app/utils/util";
 
 export default function CestaResumo() {
-    const {cesta} = useStoreContext();
+    const {cesta} = useAppSelector(state => state.cesta);
     const subtotal = cesta?.items.reduce((soma, item)=> soma + (item.preco * item.quantidade), 0) ?? 0
     const deliveryFee = subtotal! > 10000 ? 0 : 500;
 

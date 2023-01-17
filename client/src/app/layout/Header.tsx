@@ -8,12 +8,10 @@ import {
   ListItemButton,
   ListItemText,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import { NavLink, Link } from "react-router-dom";
-import SwitchCustom from "../components/SwitchCustom";
-import { useStoreContext } from "../context/StoreContext";
+import { useAppSelector } from "../store/configureStore";
 
 interface Props {
   darkMode: boolean;
@@ -51,7 +49,7 @@ const navStyles = {
 
 
 export default function Header({ darkMode, alteraTema }: Props) {
-  const {cesta} = useStoreContext();
+  const {cesta} = useAppSelector(state => state.cesta)
   const itemCount = cesta?.items.reduce((sum, item)=> sum + item.quantidade, 0);
 
   return (

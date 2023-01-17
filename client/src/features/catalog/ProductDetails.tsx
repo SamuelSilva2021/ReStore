@@ -2,8 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Divider,
   Grid,
-  List,
-  ListItem,
   Table,
   TableBody,
   TableCell,
@@ -12,14 +10,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import utils from "../../app/api/utils";
-import { useStoreContext } from "../../app/context/StoreContext";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { Product } from "../../app/models/product";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import {
+  addItemCestaAsync,
+  removeItemCestaAsync,
+} from "../cesta/cestaSlice";
+import { fetchProductAsync, productsSelectors } from "./catalogSlice";
 
 const styles = {
   primary: {
@@ -31,52 +33,53 @@ const styles = {
 };
 
 export default function ProductDetails() {
-  const { cesta, setCesta, removeItem } = useStoreContext();
+  const { cesta, status } = useAppSelector(state => state.cesta);
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const product = useAppSelector(state => productsSelectors.selectById(state, id));
+  const {status: productStatus} = useAppSelector(state => state.catalog);
   const [quantidade, setQuantidade] = useState(0);
-  const [submitting, setSubmitting] = useState(false);
-
-  const item = cesta?.items.find((i) => i.produtoId === product?.id);
+  const item = cesta?.items.find(i => i.produtoId === product?.id);
 
   useEffect(() => {
     if (item) setQuantidade(item.quantidade);
+    if(!product) dispatch(fetchProductAsync(parseInt(id)));
 
-    utils.Catalog.details(parseInt(id))
-      .then((response) => setProduct(response))
-      .catch((erro) => console.log(erro))
-      .finally(() => setLoading(false));
-  }, [id, item]);
+  }, [id, item, dispatch, product]);
 
-  function alteraQuantidadeInput(event:any){
-    if(event.target.value >= 0){
+  function alteraQuantidadeInput(event: any) {
+    if (event.target.value >= 0) {
       setQuantidade(parseInt(event.target.value));
     }
   }
 
-  function salvaAlteracaoInput(){
-    setSubmitting(true);
-
+  function salvaAlteracaoInput() {
     // adiciona item ao carrinho caso a quantidade colocada no input seja maior a que já existe
-    if(!item || quantidade > item.quantidade){
-      // Add produto ao carrinho     
-      const quantidadeAtualizada = item ? quantidade - item.quantidade : quantidade;
-      utils.Cesta.addItem(product?.id!, quantidadeAtualizada)
-      .then(cesta => setCesta(cesta))
-      .catch(error => console.log(error))
-      .finally(() => setSubmitting(false))
-    }else{
-      // Remove produto ao carrinho     
+    if (!item || quantidade > item.quantidade) {
+      // Add produto ao carrinho
+      const quantidadeAtualizada = item
+        ? quantidade - item.quantidade
+        : quantidade;
+      dispatch(
+        addItemCestaAsync({
+          produtoId: product?.id!,
+          quantidade: quantidadeAtualizada,
+        })
+      );
+    } else {
+      // Remove produto ao carrinho
       const quantidadeAtualizada = item.quantidade - quantidade;
-      utils.Cesta.removeItem(product?.id!, quantidadeAtualizada)
-      .then(cesta => removeItem(product?.id!, quantidadeAtualizada))
-      .catch(error => console.log(error))
-      .finally(() => setSubmitting(false))
+      dispatch(
+        removeItemCestaAsync({
+          produtoId: product?.id!,
+          quantidade: quantidadeAtualizada,
+          name: "rem",
+        })
+      );
     }
   }
 
-  if (loading) return <LoadingComponent mensagem="Detalhes do produto" />;
+  if (productStatus.includes('pending')) return <LoadingComponent mensagem="Detalhes do produto" />;
 
   if (!product) return <NotFound />;
   return (
@@ -123,30 +126,34 @@ export default function ProductDetails() {
           </Table>
         </TableContainer>
         <Grid container spacing={2}>
-            <Grid item xs={6}>
-                <TextField
-                    onChange={alteraQuantidadeInput}
-                    variant="outlined"
-                    type='number'
-                    label='Quantidade no carrinho'
-                    fullWidth
-                    value={quantidade}
-                />                    
-            </Grid>
-            <Grid item xs={6}>
-                <LoadingButton
-                    disabled={item?.quantidade === quantidade || !item && quantidade === 0}
-                    onClick={salvaAlteracaoInput}
-                    sx={{height: '55px'}}
-                    color = 'primary'
-                    size="large"
-                    variant="contained"
-                    fullWidth
-                    loading={submitting}
-                >
-                    {item ? 'Atualizar quantidade' : 'Adicionar ao carrinho'}
-                </LoadingButton>
-            </Grid>
+          <Grid item xs={6}>
+            <TextField
+              onChange={alteraQuantidadeInput}
+              variant="outlined"
+              type="number"
+              label="Quantidade no carrinho"
+              fullWidth
+              value={quantidade}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <LoadingButton
+              disabled={
+                item?.quantidade === quantidade || (!item && quantidade === 0)
+              }
+              onClick={salvaAlteracaoInput}
+              sx={{ height: "55px" }}
+              color="primary"
+              size="large"
+              variant="contained"
+              fullWidth
+              loading={status.includes(
+                "pending"
+              )}
+            >
+              {item ? "Atualizar quantidade" : "Adicionar ao carrinho"}
+            </LoadingButton>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
